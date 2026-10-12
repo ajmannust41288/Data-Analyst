@@ -1,0 +1,1698 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "tx45H049Xx3r"
+      },
+      "source": [
+        "Printed copies of *Elements of Data Science* are available now, with a **full color interior**, from [Lulu.com](https://www.lulu.com/shop/allen-downey/elements-of-data-science/paperback/product-9dyrwn.html)."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "wwluKEbaXx3u"
+      },
+      "source": [
+        "# Welcome\n",
+        "\n",
+        "This is the Jupyter notebook for Chapter 1 of [*Elements of Data Science*](https://greenteapress.com/wp/elements-of-data-science), by Allen B. Downey.\n",
+        "\n",
+        "If you are not familiar with Jupyter notebooks,\n",
+        "[click here for a short introduction](https://colab.research.google.com/github/AllenDowney/ElementsOfDataScience/blob/v1/jupyter_intro.ipynb).\n",
+        "\n",
+        "Then, if you are not already running this notebook on Colab, [click here to run this notebook on Colab](https://colab.research.google.com/github/AllenDowney/ElementsOfDataScience/blob/v1/01_variables.ipynb)."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "lqOzRrQ6Xx3v"
+      },
+      "source": [
+        "The following cell downloads a file and runs some code that is used specifically for this book.\n",
+        "You don't have to understand this code yet, but you should run it before you do anything else in this notebook.\n",
+        "Remember that you can run the code by selecting the cell and pressing the play button (a triangle in a circle) or hold down `Shift` and press `Enter`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [],
+        "id": "aQ1O54IqXx3w"
+      },
+      "outputs": [],
+      "source": [
+        "from os.path import basename, exists\n",
+        "\n",
+        "def download(url):\n",
+        "    filename = basename(url)\n",
+        "    if not exists(filename):\n",
+        "        from urllib.request import urlretrieve\n",
+        "\n",
+        "        local, _ = urlretrieve(url, filename)\n",
+        "        print(\"Downloaded \" + str(local))\n",
+        "    return filename\n",
+        "\n",
+        "download('https://raw.githubusercontent.com/AllenDowney/ElementsOfDataScience/v1/utils.py')\n",
+        "\n",
+        "import utils"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "T8kvURb9Xx3x"
+      },
+      "source": [
+        "# Variables and Values\n",
+        "\n",
+        "The topics in this chapter are:\n",
+        "\n",
+        "* Basic programming features in Python: variables and values.\n",
+        "\n",
+        "* Translating formulas from math notation to Python.\n",
+        "\n",
+        "You don't need a lot of math to do data science, but and the end of this chapter I'll review one topic that comes up a lot: logarithms."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "e70y_vCJXx3x"
+      },
+      "source": [
+        "## Numbers\n",
+        "\n",
+        "Python provides tools for working with many kinds of data, including numbers, words, dates, times, and locations (latitude and longitude).\n",
+        "Let's start with numbers.  Python can work with several types of numbers, but the two most common are:\n",
+        "\n",
+        "* `int`, which represents integer values like `3`, and\n",
+        "\n",
+        "* `float`, which represents numbers that have a fraction part, like `3.14159`.\n",
+        "\n",
+        "Most often, we use `int` to represent counts and `float` to represent measurements.\n",
+        "\n",
+        "Here's an example of an `int`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "4pM1UVs3Xx3y"
+      },
+      "outputs": [],
+      "source": [
+        "3"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "jGeWDLQ0Xx3y"
+      },
+      "source": [
+        "When you run a cell that contains a value like this, Jupyter displays the value.\n",
+        "\n",
+        "Here's an example of a `float`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "IR2B8MAjXx3z"
+      },
+      "outputs": [],
+      "source": [
+        "3.14159"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "IJUpSFmfXx3z"
+      },
+      "source": [
+        " `float` is short for \"floating-point\", which is the name for the way these numbers are stored.\n",
+        "Floating-point numbers can also be written in a format similar to scientific notation:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "N25y9Y35Xx3z"
+      },
+      "outputs": [],
+      "source": [
+        "1.2345e3"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "yk6t0fCvXx30"
+      },
+      "source": [
+        "This value is equivalent to $1.2345 \\times 10^{3}$, so the result is `1234.5`.\n",
+        "The `e` in `1.2345e3` stands for \"exponent\"."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "B4bmV6FgXx30"
+      },
+      "source": [
+        "If you are not familiar with scientific notation, you can read about it at <https://en.wikipedia.org/wiki/Scientific_notation>."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "sROMnFh6Xx30"
+      },
+      "source": [
+        "## Arithmetic\n",
+        "\n",
+        "Python provides operators that perform arithmetic.  The operators that perform addition and subtraction are `+` and `-`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "6D58oDjRXx30"
+      },
+      "outputs": [],
+      "source": [
+        "3 + 2 - 1"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "BRUC6LmhXx30"
+      },
+      "source": [
+        "The operators that perform multiplication and division are `*` and `/`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "46ZDNVw8Xx31"
+      },
+      "outputs": [],
+      "source": [
+        "2 * 3"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "hWMu5K7qXx31"
+      },
+      "outputs": [],
+      "source": [
+        "2 / 3"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "oYPKbnzpXx31"
+      },
+      "source": [
+        "And the operator for exponentiation is `**`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "6RGnQdOTXx31"
+      },
+      "outputs": [],
+      "source": [
+        "2 ** 3"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "6q8nPXr5Xx31"
+      },
+      "source": [
+        "Unlike math notation, Python does not allow implicit multiplication.  For example, in math notation, if you write $3 (2 + 1)$, that's understood to be the same as $3 \\times (2+ 1)$.\n",
+        "In Python, that's an error."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "2Fv3QJDSXx32"
+      },
+      "source": [
+        "NOTE: The following cell uses `%%expect`, which is a Jupyter \"magic command\" that means we expect the code in this cell to produce an error."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "o0Z7OwK3Xx32"
+      },
+      "source": [
+        "For more about this magic command, see the\n",
+        "[Jupyter notebook introduction](https://colab.research.google.com/github/AllenDowney/ThinkPython/blob/v3/chapters/jupyter_intro.ipynb)."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [
+          "raises-exception"
+        ],
+        "id": "v2bEyOE2Xx32"
+      },
+      "outputs": [],
+      "source": [
+        "%%expect TypeError\n",
+        "\n",
+        "3 (2 + 1)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "aFXG0XRbXx32"
+      },
+      "source": [
+        "In this example, the error message is not very helpful, which is why I am warning you now.\n",
+        "If you want to multiply, you have to use the `*` operator."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "BNsqINgNXx32"
+      },
+      "source": [
+        "The arithmetic operators follow the rules of precedence you might have learned as \"PEMDAS\":\n",
+        "\n",
+        "* Parentheses before\n",
+        "* Exponentiation before\n",
+        "* Multiplication and division before\n",
+        "* Addition and subtraction.\n",
+        "\n",
+        "So in this expression:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "Jcvx6eIPXx32"
+      },
+      "outputs": [],
+      "source": [
+        "1 + 2 * 3"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "s-oLIzqBXx33"
+      },
+      "source": [
+        "The multiplication happens first.  If that's not what you want, you can use parentheses to make the order of operations explicit:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "_AFo2oakXx33"
+      },
+      "outputs": [],
+      "source": [
+        "(1 + 2) * 3"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "hpQ1WIb8Xx33"
+      },
+      "source": [
+        "**Exercise:** Write a Python expression that raises `1+2` to the power `3*4`.  The answer should be `531441`."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "RnRRENdKXx33"
+      },
+      "source": [
+        "Note: in the cell below, it should say\n",
+        "\n",
+        "```\n",
+        "# Solution goes here\n",
+        "```\n",
+        "\n",
+        "Lines like this that begin with `#` are \"comments\" -- they provide information, but they have no effect when the program runs.\n",
+        "When you do this exercise, you should delete the comment and replace it with your solution."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "8YRZVlo9Xx33"
+      },
+      "outputs": [],
+      "source": [
+        "# Solution goes here"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "VJZ6mDJnXx33"
+      },
+      "source": [
+        "## Math Functions\n",
+        "\n",
+        "Python provides functions that compute mathematical functions like `sin` and `cos`, `exp` and `log`.\n",
+        "However, they are not part of Python itself, but they are available from a **library**, which is a collection of values and functions.\n",
+        "The one we'll use is called NumPy, which stands for \"Numerical Python\", and is pronounced \"num pie\".\n",
+        "Before you can use a library, you have to **import** it.\n",
+        "Here's how we import NumPy:  "
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "E2ATxza_Xx34"
+      },
+      "outputs": [],
+      "source": [
+        "import numpy as np"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "2TF7eQUlXx34"
+      },
+      "source": [
+        "This line of code imports `numpy` as `np`, which means we can refer to it by the short name `np` rather than the longer name `numpy`.\n",
+        "Names like this are case-sensitive, which means that `numpy` is not the same as `NumPy`.\n",
+        "So even though the name of the library is NumPy, when we import it we have to call it `numpy`.  "
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [
+          "raises-exception"
+        ],
+        "id": "tGM-j3hWXx34"
+      },
+      "outputs": [],
+      "source": [
+        "%%expect ModuleNotFoundError\n",
+        "\n",
+        "import NumPy as np"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Uz0ayk5LXx34"
+      },
+      "source": [
+        "This error message might be confusing if you don't pay attention to the difference between uppercase and lowercase.\n",
+        "But assuming we import `np` correctly, we can use it to read the value `pi`, which represents the mathematical constant $\\pi$."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "TcRjV5dXXx34"
+      },
+      "outputs": [],
+      "source": [
+        "np.pi"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "6iOB5d5iXx34"
+      },
+      "source": [
+        "The result is a `float` with 16 digits.  As you might know, we can't represent $\\pi$ with a finite number of digits, so this result is only approximate.\n",
+        "\n",
+        "NumPy provides `log`, which computes the natural logarithm"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "AvcY0_7iXx36"
+      },
+      "outputs": [],
+      "source": [
+        "np.log(100)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "vsUAeJADXx36"
+      },
+      "source": [
+        "NumPy also provides `exp`, which raises the constant `e` to a power."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "bAE9l6hWXx36"
+      },
+      "outputs": [],
+      "source": [
+        "np.exp(1)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Nr4du7JUXx36"
+      },
+      "source": [
+        "**Exercise:** Use these functions to check the identity $\\log(e^x) = x$.\n",
+        "Mathematically, it is true for any value of $x$.\n",
+        "With floating-point values, it only holds for values of $x$ between -700 and 700.\n",
+        "What happens when you try it with larger and smaller values?"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "mJbUxoAJXx36"
+      },
+      "outputs": [],
+      "source": [
+        "# Solution goes here"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "rOWMqK-YXx37"
+      },
+      "source": [
+        "Floating-point numbers are finite approximations, which means they don't always behave like math.\n",
+        "As another example, let's see what happens if we add up `0.1` three times:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "N_qrj6D7Xx37"
+      },
+      "outputs": [],
+      "source": [
+        "0.1 + 0.1 + 0.1"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "pKp5bJxjXx37"
+      },
+      "source": [
+        "The result is close to `0.3`, but not exact.\n",
+        "When you work with floating-point numbers, remember that they are only approximately correct."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "2FLAfeR_Xx37"
+      },
+      "source": [
+        "## Variables\n",
+        "\n",
+        "A **variable** is a name that refers to a value.\n",
+        "The following statement assigns the value `5` to a variable named `x`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "9d2qWUnEXx37"
+      },
+      "outputs": [],
+      "source": [
+        "x = 5"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "aRujLjAvXx37"
+      },
+      "source": [
+        "The variable we just created has the name `x` and the value `5`."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "fS9A6_a8Xx38"
+      },
+      "source": [
+        "If a variable name appears at the end of a cell, Jupyter displays its value."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [],
+        "id": "a3gHAm6bXx38"
+      },
+      "outputs": [],
+      "source": [
+        "x"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "G8i7hDENXx38"
+      },
+      "source": [
+        "If we use `x` as part of an arithmetic operation, it represents the value `5`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "jPzAH2M2Xx38"
+      },
+      "outputs": [],
+      "source": [
+        "x + 1"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "LW8sRzi8Xx38"
+      },
+      "outputs": [],
+      "source": [
+        "x ** 2"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-nNHfsShXx38"
+      },
+      "source": [
+        "We can also use a variable when we call a function:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "VL5Pqj-uXx38"
+      },
+      "outputs": [],
+      "source": [
+        "np.exp(x)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "SVzRL3NYXx39"
+      },
+      "source": [
+        "Notice that the result from `exp` is a `float`, even though the value of `x` is an `int`."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "KhmPN0B8Xx39"
+      },
+      "source": [
+        "**Exercise:** If you have not programmed before, one of the things you have to get used to is that programming languages are picky about details. Natural languages, like English, and semi-formal languages, like math notation, are more forgiving.\n",
+        "\n",
+        "As an example, in math notation, parentheses and square brackets mean the same thing, you can write $\\sin (\\omega t)$ or $\\sin [\\omega t]$ -- either one is fine. And you can leave out the parentheses altogether, as long as the meaning is clear, as in $\\sin \\omega t$.\n",
+        "In Python, every character counts. For example, the following are all different, and only the first one works:\n",
+        "\n",
+        "```\n",
+        "np.exp(x)\n",
+        "np.Exp(x)\n",
+        "np.exp[x]\n",
+        "np.exp x\n",
+        "```\n",
+        "\n",
+        "While you are learning, I encourage you to make mistakes on purpose to see what goes wrong.  Read the error messages carefully.  Sometimes they are helpful and tell you exactly what's wrong.  Other times they can be misleading.  But if you have seen the message before, you might remember some likely causes."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "sG3EdW4zXx39"
+      },
+      "source": [
+        "In the next cell, try out the different versions of `np.exp(x)` above, and see what error messages you get."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [],
+        "id": "iECt2L_vXx39"
+      },
+      "outputs": [],
+      "source": [
+        "np.exp(x)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "pUQq2NJ-Xx39"
+      },
+      "source": [
+        "**Exercise:** The NumPy function that computes square roots is `sqrt`.\n",
+        "Use it to compute a floating-point approximation of the golden ratio,\n",
+        "$\\phi = \\frac{1}{2}(1 + \\sqrt{5})$. Hint: The result should be close to `1.618`."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "aSvyZD5PXx39"
+      },
+      "outputs": [],
+      "source": [
+        "# Solution goes here"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "6N5xt6DmXx3-"
+      },
+      "source": [
+        "## Save your work\n",
+        "\n",
+        "If you are running on Colab and you want to save your work, now is a good time to press the \"Copy to Drive\" button (near the upper left), which saves a copy of this notebook in your Google Drive.\n",
+        "\n",
+        "If you want to change the name of the file, you can click on the name in the upper left.\n",
+        "If you don't use Google Drive, look under the File menu to see other options.\n",
+        "\n",
+        "Once you make a copy, any additional changes you make will be saved automatically, so now you can continue without worrying about losing your work."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "2lR3c55CXx3-"
+      },
+      "source": [
+        "## Calculating with Variables\n",
+        "\n",
+        "Now we'll use variables to solve a problem involving compound interest.\n",
+        "It might not be the most exciting example, but it uses everything we have done so far, and it reviews exponentiation and logarithms, which we are going to need.\n",
+        "\n",
+        "If we invest an amount of money, $P$, in an account that earns compounded interest, the total accumulated value, $V$, after an interval of time, $t$, is:\n",
+        "\n",
+        "$V=P\\left(1+{\\frac {r}{n}}\\right)^{nt}$\n",
+        "\n",
+        "where $r$ is the annual interest rate and $n$ is the compounding frequency.\n",
+        "For example, if you deposit \\$2,100 in a bank paying an annual interest rate of 3.4\\% compounded four times a year, we can compute the balance after 7 years by defining these variables:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "jZaA3OG8Xx3-"
+      },
+      "outputs": [],
+      "source": [
+        "P = 2100\n",
+        "r = 0.034\n",
+        "n = 4\n",
+        "t = 7"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Y01OHnb8Xx3-"
+      },
+      "source": [
+        "And computing the total accumulated value like this."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "CqbMdX_iXx3-"
+      },
+      "outputs": [],
+      "source": [
+        "P * (1 + r/n)**(n*t)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "GwMNOObSXx3_"
+      },
+      "source": [
+        "**Exercise:** Continuing the previous example, suppose you start with the same principle and the same interest rate, but interest is compounded twice per year, so `n = 2`.\n",
+        "What would the total value be after 7 years?  Hint: we expect the answer to be a bit less than the previous answer."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "t2Wa2NKwXx3_"
+      },
+      "outputs": [],
+      "source": [
+        "# Solution goes here"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "8GGhWg5VXx3_"
+      },
+      "source": [
+        "**Exercise:** If interest is compounded continuously, the value after time $t$ is $V=P~e^{rt}$. Translate this equation into Python and use it compute the value of the investment in the previous example with continuous compounding.  Hint: we expect the answer to be a bit more than the previous answers."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "YF08VA4gXx3_"
+      },
+      "outputs": [],
+      "source": [
+        "# Solution goes here"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "-Spej0GgXx3_"
+      },
+      "source": [
+        "**Exercise** If we solve the previous equation for $r$, we get $r = \\log(V/P)~/~t$,\n",
+        "where $\\log$ is the logarithm base $e$, also known as the natural logarithm.\n",
+        "\n",
+        "Harvard's tuition in 1970 was \\\\$4,070 (not including room, board, and fees).\n",
+        "In 2019 it was \\\\$46,340.\n",
+        "What was the annual rate of increase over that period, treating it as if it had compounded continuously?\"\n",
+        "For comparison, the average annual rate of inflation over the same period, based on the consumer price index (CPI) was 3.84%."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [],
+        "id": "8Tbxx-xlXx3_"
+      },
+      "outputs": [],
+      "source": [
+        "# Solution goes here"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "wbAXvUq2Xx4A"
+      },
+      "source": [
+        "## Summary\n",
+        "\n",
+        "This chapter introduces variables, which are names that refer to values, and two kinds of values, integers and floating-point numbers.\n",
+        "\n",
+        "It presents mathematical operators, like `+` for addition and `*` for multiplication, and mathematical functions like `log` for logarithms and `exp` for raising `e` to a power.\n",
+        "\n",
+        "In the next chapter, we'll see additional data types for representing letters and words, dates and times, and latitude and longitude."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "collapsed": true,
+        "tags": [],
+        "id": "Dxd5z94CXx4A"
+      },
+      "source": [
+        "## A little more Jupyter\n",
+        "\n",
+        "Here are a few tips on using Jupyter to compute and display values.\n",
+        "\n",
+        "Generally, if there is a single expression in a cell, Jupyter computes the value of the expression and displays the result.\n",
+        "For example, we've already seen how to display the value of `np.pi`:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [],
+        "id": "ut8TTKWlXx4A"
+      },
+      "outputs": [],
+      "source": [
+        "np.pi"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "gwZ9fyV-Xx4A"
+      },
+      "source": [
+        "Here's a more complex example with functions, operators, and numbers:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [],
+        "id": "kWCDKJLTXx4A"
+      },
+      "outputs": [],
+      "source": [
+        "1 / np.sqrt(2 * np.pi) * np.exp(-3**2 / 2)"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "7DO-rNF7Xx4A"
+      },
+      "source": [
+        "If you put more than one expression in a cell, Jupyter computes them all, but it only display the result from the last:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [],
+        "id": "KxVCYx0iXx4A"
+      },
+      "outputs": [],
+      "source": [
+        "1\n",
+        "2 + 3\n",
+        "np.exp(1)\n",
+        "(1 + np.sqrt(5)) / 2"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "jWg_7NahXx4B"
+      },
+      "source": [
+        "If you want to display more than one value, you can separate them with commas:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [],
+        "id": "CrGY4iP0Xx4B"
+      },
+      "outputs": [],
+      "source": [
+        "1, 2 + 3, np.exp(1), (1 + np.sqrt(5)) / 2"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "VxUvNBjsXx4B"
+      },
+      "source": [
+        "That result is actually a tuple, which you will learn about in the next chapter.\n",
+        "\n",
+        "Here's one last Jupyter tip: when you assign a value to variable, Jupyter does not display the value:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [],
+        "id": "7zh5LkCVXx4B"
+      },
+      "outputs": [],
+      "source": [
+        "phi = (1 + np.sqrt(5)) / 2"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "AuK2THPQXx4B"
+      },
+      "source": [
+        "So it is idiomatic to assign a value to a variable and immediately display the result:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [],
+        "id": "wrCxL_hbXx4B"
+      },
+      "outputs": [],
+      "source": [
+        "phi = (1 + np.sqrt(5)) / 2\n",
+        "phi"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "Ipdlcov_Xx4C"
+      },
+      "source": [
+        "**Exercise:** Display the value of $\\phi$ and its inverse, $1/\\phi$, on a single line. Do you notice anything about the relationship between the values?"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "tags": [],
+        "id": "x4JbhCgTXx4C"
+      },
+      "outputs": [],
+      "source": [
+        "# Solution goes here"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "tags": [],
+        "id": "ZDuttdoOXx4C"
+      },
+      "source": [
+        "*Elements of Data Science*\n",
+        "\n",
+        "Copyright 2021 [Allen B. Downey](https://allendowney.com)\n",
+        "\n",
+        "License: [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International](https://creativecommons.org/licenses/by-nc-sa/4.0/)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "vkcwlqOaXx4C"
+      },
+      "outputs": [],
+      "source": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Session one** ---------------------12/10/2026 NUST"
+      ],
+      "metadata": {
+        "id": "O_wuSitJX3Uh"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "\n",
+        "# Create data using a dictionary\n",
+        "data = {\n",
+        "    \"Student\": [\"Amit\", \"Rahul\", \"Priya\", \"Neha\", \"Arjun\"],\n",
+        "    \"Math\": [78, 85, 92, 65, 88],\n",
+        "    \"Python\": [82, 91, 95, 72, 84],\n",
+        "    \"C++\": [75, 88, 90, 68, 86],\n",
+        "    \"SQL\": [75, 88, 90, 68, 86],\n",
+        "    \"English\": [80, 76, 89, 74, 82],\n",
+        "    \"Computer\": [85, 94, 96, 70, 90]\n",
+        "}\n",
+        "\n",
+        "# Create a DataFrame\n",
+        "df = pd.DataFrame(data)\n",
+        "\n",
+        "# Print the DataFrame\n",
+        "print(df)"
+      ],
+      "metadata": {
+        "id": "BuusQjx6YIPO",
+        "outputId": "4a3026f1-6b99-49af-c6f1-28908106e633",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  Student  Math  Python  C++  SQL  English  Computer\n",
+            "0    Amit    78      82   75   75       80        85\n",
+            "1   Rahul    85      91   88   88       76        94\n",
+            "2   Priya    92      95   90   90       89        96\n",
+            "3    Neha    65      72   68   68       74        70\n",
+            "4   Arjun    88      84   86   86       82        90\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Create a new column for Total Marks (sum of numeric subject columns)\n",
+        "df[\"Total_Marks\"] = df[[\"Math\", \"Python\",\"C++\" ,\"SQL\", \"English\", \"Computer\"]].sum(axis=1)\n",
+        "\n",
+        "# Create a new column for Average Percentage\n",
+        "df[\"Percentage\"] = df[\"Total_Marks\"] / 6\n",
+        "\n",
+        "print(df[[\"Student\", \"Total_Marks\", \"Percentage\"]])"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "tuugm7q1Y6CQ",
+        "outputId": "6b25540e-fa8b-4310-d170-a86a74e368d7"
+      },
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  Student  Total_Marks  Percentage\n",
+            "0    Amit          475   79.166667\n",
+            "1   Rahul          522   87.000000\n",
+            "2   Priya          552   92.000000\n",
+            "3    Neha          417   69.500000\n",
+            "4   Arjun          516   86.000000\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# i want to create min and max of the subject marks and percentage\n"
+      ],
+      "metadata": {
+        "id": "BG0yPh3ZaauJ"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Create a new column for Total Marks (sum of numeric subject columns)\n",
+        "df[\"Max_marks\"] = df[[\"Math\", \"Python\",\"C++\" ,\"SQL\", \"English\", \"Computer\"]].max(axis=1)\n",
+        "\n",
+        "df[\"Min_marks\"] = df[[\"Math\", \"Python\",\"C++\" ,\"SQL\", \"English\", \"Computer\"]].min(axis=1)\n",
+        "\n",
+        "print(df[[\"Student\", \"Max_marks\", \"Min_marks\"]])"
+      ],
+      "metadata": {
+        "outputId": "ed49d836-905a-46e9-e17e-000f1f280f42",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "xm62mg9wal2o"
+      },
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  Student  Max_marks  Min_marks\n",
+            "0    Amit         85         75\n",
+            "1   Rahul         94         76\n",
+            "2   Priya         96         89\n",
+            "3    Neha         74         65\n",
+            "4   Arjun         90         82\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Top performer based on Total Marks\n",
+        "top_student = df.loc[df[\"Total_Marks\"].idxmax()]\n",
+        "print(f\"Top Student: {top_student['Student']} with {top_student['Total_Marks']} marks\")\n",
+        "\n",
+        "# Subject-wise average scores across all students\n",
+        "print(\"\\n--- Subject Averages ---\")\n",
+        "print(df[[\"Math\", \"Python\",\"C++\", \"SQL\", \"English\", \"Computer\"]].mean())"
+      ],
+      "metadata": {
+        "id": "rc34hXXobg4h",
+        "outputId": "9ed91936-ec68-4f57-9a6b-66ca9c662047",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Top Student: Priya with 552 marks\n",
+            "\n",
+            "--- Subject Averages ---\n",
+            "Math        81.6\n",
+            "Python      84.8\n",
+            "C++         81.4\n",
+            "SQL         81.4\n",
+            "English     80.2\n",
+            "Computer    87.0\n",
+            "dtype: float64\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Filter rows where Python score > 80\n",
+        "high_python_scorers = df[df[\"Python\"] > 80]\n",
+        "print(high_python_scorers[[\"Student\", \"Python\"]])"
+      ],
+      "metadata": {
+        "id": "lQp8Qp2ecF7f",
+        "outputId": "fe864c1c-839d-4b63-8b94-35fc05382ca7",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  Student  Python\n",
+            "0    Amit      82\n",
+            "1   Rahul      91\n",
+            "2   Priya      95\n",
+            "4   Arjun      84\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Assign Grade based on Percentage\n",
+        "def assign_grade(pct):\n",
+        "    if pct >= 90:\n",
+        "        return \"Distinction\"\n",
+        "    elif pct >= 80:\n",
+        "        return \"First Class\"\n",
+        "    elif pct >= 70:\n",
+        "        return \"Second Class\"\n",
+        "    else:\n",
+        "        return \"Pass\"\n",
+        "\n",
+        "df[\"Grade\"] = df[\"Percentage\"].apply(assign_grade)\n",
+        "print(df[[\"Student\", \"Percentage\", \"Grade\"]])"
+      ],
+      "metadata": {
+        "id": "MJSfaBx4csxM",
+        "outputId": "0b7e3865-80eb-467a-c82f-4e947cd3934a",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "  Student  Percentage         Grade\n",
+            "0    Amit   79.166667  Second Class\n",
+            "1   Rahul   87.000000   First Class\n",
+            "2   Priya   92.000000   Distinction\n",
+            "3    Neha   69.500000          Pass\n",
+            "4   Arjun   86.000000   First Class\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "numbers = [3, 6, 9, 2, 5]\n",
+        "total = 0\n",
+        "for num in numbers:\n",
+        "    if num > 5:\n",
+        "        total += num\n",
+        "\n",
+        "average = total / len(numbers)\n",
+        "if average > 2:\n",
+        "    result = \"Greater\"\n",
+        "else:\n",
+        "    result = \"Smaller\"\n",
+        "\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "id": "yq_axmsqfW8L",
+        "outputId": "b4953a61-4c31-47ce-9269-8896a182e5e9",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 9,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Greater\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "numbers = [10, 15, 4, 8, 20, 3]\n",
+        "total = 0\n",
+        "for num in numbers:\n",
+        "    if num >= 10:\n",
+        "        total += num\n",
+        "\n",
+        "average = total / len(numbers)\n",
+        "if average > 7.5:\n",
+        "    result = \"Pass\"\n",
+        "else:\n",
+        "    result = \"Fail\"\n",
+        "\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "id": "Q-z0adU4gRUC",
+        "outputId": "6e7f68cf-037d-4754-8ee8-79f2d69b0567",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 10,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Fail\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "numbers = [1, 2, 3, 4, 5]\n",
+        "total = 0\n",
+        "for num in numbers:\n",
+        "    if num > 10:\n",
+        "        total += num\n",
+        "\n",
+        "average = total / len(numbers)\n",
+        "if average > 0:\n",
+        "    result = \"Positive\"\n",
+        "else:\n",
+        "    result = \"Zero or Less\"\n",
+        "\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "id": "Ux46w1xtgigo",
+        "outputId": "70184537-ab84-4790-9a93-569a7c76b4fa",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 11,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Zero or Less\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "numbers = [12, 18, 5, 25, 30]\n",
+        "total = 0\n",
+        "for num in numbers:\n",
+        "    if num > 15:\n",
+        "        total += num\n",
+        "\n",
+        "average = total / len(numbers)\n",
+        "if average >= 14.5:\n",
+        "    result = \"High\"\n",
+        "else:\n",
+        "    result = \"Low\"\n",
+        "\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "id": "GwEYGtH5hneu",
+        "outputId": "a8f08f1a-14cb-47cf-efc1-7366fdc4e385",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 12,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "High\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "numbers = [8, 4, 12, 16, 20, 24]\n",
+        "total = 0\n",
+        "for num in numbers:\n",
+        "    if num > 10:\n",
+        "        total += num\n",
+        "\n",
+        "average = total / len(numbers)\n",
+        "if average > 12:\n",
+        "    result = \"Above Target\"\n",
+        "else:\n",
+        "    result = \"Below Target\"\n",
+        "\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "id": "BTAe1MVhh1X5",
+        "outputId": "540b608b-2757-4f2b-c617-8dbbdec6fb61",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 13,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Below Target\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "numbers = [7, 14, 21, 28]\n",
+        "total = 0\n",
+        "for num in numbers:\n",
+        "    if num > 10:\n",
+        "        total += num\n",
+        "\n",
+        "average = total / len(numbers)\n",
+        "if average > 15:\n",
+        "    result = \"Upper\"\n",
+        "else:\n",
+        "    result = \"Lower\"\n",
+        "\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "id": "zfS6WrLgh7MJ",
+        "outputId": "4cff0942-0901-40d6-be2a-bb311dabb975",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 14,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Upper\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "numbers = [5, 5, 5, 5, 5]\n",
+        "total = 0\n",
+        "for num in numbers:\n",
+        "    if num > 4:\n",
+        "        total += num\n",
+        "\n",
+        "average = total / len(numbers)\n",
+        "if average > 5:\n",
+        "    result = \"Exceeds\"\n",
+        "else:\n",
+        "    result = \"Meets or Below\"\n",
+        "\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "id": "1U1E8EWeiCUC",
+        "outputId": "d68fb99e-59aa-4e6d-a679-fb7de433620e",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 15,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Meets or Below\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "numbers = [100, 200, 300]\n",
+        "total = 0\n",
+        "for num in numbers:\n",
+        "    if num > 150:\n",
+        "        total += num\n",
+        "\n",
+        "average = total / len(numbers)\n",
+        "if average > 160:\n",
+        "    result = \"Above Baseline\"\n",
+        "else:\n",
+        "    result = \"Below Baseline\"\n",
+        "\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "id": "9KdUP2fciMWf",
+        "outputId": "adcbe842-4851-4cc9-f080-28cbf92d0af9",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 16,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Above Baseline\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "numbers = [2, 4, 6, 8, 10]\n",
+        "total = 0\n",
+        "for num in numbers:\n",
+        "    if num > 6:\n",
+        "        total += num\n",
+        "\n",
+        "average = total / len(numbers)\n",
+        "if average > 3.5:\n",
+        "    result = \"High Score\"\n",
+        "else:\n",
+        "    result = \"Low Score\"\n",
+        "\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "id": "U5XQV_AMiR3z",
+        "outputId": "baf4a0a2-f786-44fd-a289-148233290f02",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 17,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "High Score\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "numbers = [15, 25, 35, 45, 55]\n",
+        "total = 0\n",
+        "for num in numbers:\n",
+        "    if num > 30:\n",
+        "        total += num\n",
+        "\n",
+        "average = total / len(numbers)\n",
+        "if average > 27:\n",
+        "    result = \"Optimal\"\n",
+        "else:\n",
+        "    result = \"Suboptimal\"\n",
+        "\n",
+        "print(result)"
+      ],
+      "metadata": {
+        "id": "kNsUmtPaiblF",
+        "outputId": "219c1a09-ae59-4769-f477-00c4f74ff64f",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 18,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Suboptimal\n"
+          ]
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "celltoolbar": "Tags",
+    "kernelspec": {
+      "display_name": "Python 3 (ipykernel)",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.10.14"
+    },
+    "colab": {
+      "provenance": []
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
