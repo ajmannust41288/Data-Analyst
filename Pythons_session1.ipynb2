@@ -1668,6 +1668,39 @@
           ]
         }
       ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Calculate the average of numbers\n",
+        "numbers = [10, 25, 15, 40, 20]\n",
+        "total = 0\n",
+        "\n",
+        "for num in numbers:\n",
+        "    total += num\n",
+        "\n",
+        "# Calculate average\n",
+        "average = total / len(numbers)\n",
+        "\n",
+        "print(\"Average: \", average)"
+      ],
+      "metadata": {
+        "id": "OOkE1rNSlSjV",
+        "outputId": "aa8cf816-2c2c-4a78-9399-d42e3811e476",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        }
+      },
+      "execution_count": 19,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Average:  22.0\n"
+          ]
+        }
+      ]
     }
   ],
   "metadata": {
